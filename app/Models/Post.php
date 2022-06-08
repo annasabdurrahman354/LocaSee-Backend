@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -46,5 +47,10 @@ class Post extends Model
     public function kecamatan()
     {
         return $this->belongsTo(Kecamatan::class);
+    }
+
+    public function dateDiff(){
+        Carbon::setLocale('id');
+        return $this->attributes['created_at']->diffForHumans(); 
     }
 }

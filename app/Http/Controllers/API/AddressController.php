@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
-use Illuminate\Http\Request;
 use Validator;
 
 class AddressController extends Controller
