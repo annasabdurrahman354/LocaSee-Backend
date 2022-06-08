@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         'index', 'show', 'update', 'destroy'
     ]);
 
+    Route::get('/type/', [App\Http\Controllers\API\TypeController::class, 'index']);
+
     Route::get('/address/provinsi/', [App\Http\Controllers\API\AddressController::class, 'provinsi']);
     Route::get('/address/kabupaten/', [App\Http\Controllers\API\AddressController::class, 'kabupaten']);
     Route::get('/address/kabupatenOnProvinsi/{id}', [App\Http\Controllers\API\AddressController::class, 'kabupatenByProvinsi']);

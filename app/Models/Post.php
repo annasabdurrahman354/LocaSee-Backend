@@ -19,6 +19,7 @@ class Post extends Model
         'latitude',
         'longitude',
         'images',
+        'land_type_id',
         'user_id',
         'provinsi_id',
         'kabupaten_id',
@@ -32,6 +33,11 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function landType()
+    {
+        return $this->belongsTo(LandType::class);
     }
 
     public function provinsi()

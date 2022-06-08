@@ -20,5 +20,15 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        \App\Models\LandType::factory()->create([
+             'title' => 'Sawah',
+        ]);
+        \App\Models\LandType::factory()->create([
+            'title' => 'Pekarangan',
+        ]);
+        \App\Models\LandType::factory()->create([
+            'title' => 'Lahan Kosong',
+        ]);
     }
 }

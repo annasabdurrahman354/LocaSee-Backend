@@ -13,13 +13,13 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->with('user', 'provinsi', 'kabupaten', 'kecamatan')->get();
+        $posts = Post::latest()->with('landType', 'user', 'provinsi', 'kabupaten', 'kecamatan')->get();
         return response()->json(['data' => $posts, 'message' => 'Posts fetched.']);
     }
 
     public function show($id)
     {
-        $post = Post::find($id)->with('user', 'provinsi', 'kabupaten', 'kecamatan')->get();
+        $post = Post::find($id)->with('landType', 'user', 'provinsi', 'kabupaten', 'kecamatan')->get();
         if (is_null($post)) {
             return response()->json(['message' => 'Data not found'], 404); 
         }
@@ -36,6 +36,7 @@ class PostController extends Controller
             'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+            'land_type_id' => 'required|numeric',
             'user_id' => 'required|numeric',
             'provinsi_id' => 'required|numeric',
             'kabupaten_id' => 'required|numeric',
@@ -58,6 +59,7 @@ class PostController extends Controller
             'address' => $request->address,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
+            'land_type_id' => $request->land_type_id,
             'user_id' => $request->user_id,
             'provinsi_id' => $request->provinsi_id,
             'kabupaten_id' => $request->kabupaten_id,
@@ -96,6 +98,7 @@ class PostController extends Controller
             'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+            'land_type_id' => 'required|numeric',
             'user_id' => 'required|numeric',
             'provinsi_id' => 'required|numeric',
             'kabupaten_id' => 'required|numeric',
@@ -128,6 +131,7 @@ class PostController extends Controller
         $post->address = $request->address;
         $post->latitude = $request->latitude;
         $post->longitude = $request->longitude;
+        $post->land_type_id = $request->land_type_id;
         $post->user_id = $request->user_id;
         $post->provinsi_id = $request->provinsi_id;
         $post->kabupaten_id = $request->kabupaten_id;
@@ -151,7 +155,7 @@ class PostController extends Controller
 
     public function getUserPosts($id)
     {
-        $posts = Post::where('user_id', $id)->latest()->with('user', 'provinsi', 'kabupaten', 'kecamatan')->get();
+        $posts = Post::where('user_id', $id)->latest()->with('type', 'user', 'provinsi', 'kabupaten', 'kecamatan')->get();
         if(count($posts) === 0) {
             return response()->json('Data not found', 404); 
         }
@@ -160,8 +164,12 @@ class PostController extends Controller
 
     public function filter(Request $request)
     {
-        $posts = Post::latest()->with('user', 'provinsi', 'kabupaten', 'kecamatan');
+        $posts = Post::latest()->with('landType', 'user', 'provinsi', 'kabupaten', 'kecamatan');
       
+        if ($request->has('land_type')) {
+            $posts->where('land_type_id','>=', $request->land_type);
+        }
+
         if ($request->has('price_min')) {
             $posts->where('price','>=', $request->price_min);
         }

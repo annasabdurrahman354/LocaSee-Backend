@@ -18,6 +18,8 @@ class CreatePostsTable extends Migration
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
             $table->json('images');
+            $table->unsignedBigInteger('land_type_id')->nullable();
+            $table->foreign('land_type_id')->references('id')->on('land_types');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('provinsi_id')->nullable();
