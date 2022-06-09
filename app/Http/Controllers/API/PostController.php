@@ -20,11 +20,11 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::find($id)->with('user', 'provinsi', 'kabupaten', 'kecamatan')->get();
+        $post = Post::where('id', $id)->with('user', 'provinsi', 'kabupaten', 'kecamatan')->get();
         if (is_null($post)) {
             return response()->json(['message' => 'Data not found'], 404); 
         }
-        return response()->json(['data' => $post, 'message' => 'Posts fetched.']);
+        return response()->json(['data' => $post[0], 'message' => 'Posdddts fetched.']);
     }
 
     public function store(Request $request)

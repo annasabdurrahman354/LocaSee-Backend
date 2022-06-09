@@ -9,7 +9,7 @@ use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 use Validator;
 
-class AddressController extends Controller
+class LocationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,27 +22,23 @@ class AddressController extends Controller
         return response()->json(['data' => $provinsis, 'message' => 'Provinsis fetched.']);
     }
 
-    public function kabupaten()
+    public function kabupaten(Request $request)
     {
+        if ($request->has('provinsi')) {
+            $kabupatens = Kabupaten::where('provinsi_id', $request->provinsi)->orderBy('title')->get();
+            return response()->json(['data' => $kabupatens, 'message' => 'Kabupatens fetched.']);
+        }
         $kabupatens = Kabupaten::orderBy('title')->get();
         return response()->json(['data' => $kabupatens, 'message' => 'Kabupatens fetched.']);
     }
 
-    public function kabupatenByProvinsi($id)
+    public function kecamatan(Request $request)
     {
-        $kabupatens = Kabupaten::where('provinsi_id', $id)->orderBy('title')->get();
-        return response()->json(['data' => $kabupatens, 'message' => 'Kabupatens fetched.']);
-    }
-
-    public function kecamatan()
-    {
+        if ($request->has('kabupaten')) {
+            $kecamatans = Kecamatan::where('kabupaten_id',$request->kabupaten)->orderBy('title')->get();
+            return response()->json(['data' => $kecamatans, 'message' => 'Kecamatans fetched.']);
+        }
         $kecamatans = Kecamatan::orderBy('title')->get();
-        return response()->json(['data' => $kecamatans, 'message' => 'Kecamatans fetched.']);
-    }
-
-    public function kecamatanByKabupaten($id)
-    {
-        $kecamatans = Kecamatan::where('kabupaten_id', $id)->orderBy('title')->get();
         return response()->json(['data' => $kecamatans, 'message' => 'Kecamatans fetched.']);
     }
 }

@@ -25,19 +25,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
    
     Route::resource('/post', App\Http\Controllers\API\PostController::class)->only([
-        'index', 'show', 'store', 'update', 'destroy'
+        'index', 'store', 'update', 'destroy'
     ]);
-
+    Route::get('/post/{id}', [App\Http\Controllers\API\PostController::class, 'show'])->where('id', '[0-9]+');
     Route::get('/post/user/{id}', [App\Http\Controllers\API\PostController::class, 'getUserPosts']);
-    Route::get('/filter/', [\App\Http\Controllers\API\PostController::class, 'filter']);
+    Route::get('/post/filter', [\App\Http\Controllers\API\PostController::class, 'filter']);
 
     Route::resource('/user', App\Http\Controllers\API\UserController::class)->only([
         'index', 'show', 'update', 'destroy'
     ]);
 
-    Route::get('/address/provinsi/', [App\Http\Controllers\API\AddressController::class, 'provinsi']);
-    Route::get('/address/kabupaten/', [App\Http\Controllers\API\AddressController::class, 'kabupaten']);
-    Route::get('/address/kabupatenOnProvinsi/{id}', [App\Http\Controllers\API\AddressController::class, 'kabupatenByProvinsi']);
-    Route::get('/address/kecamatan/', [App\Http\Controllers\API\AddressController::class, 'kecamatan']);
-    Route::get('/address/kecamatanOnKabupaten/{id}', [App\Http\Controllers\API\AddressController::class, 'kecamatanByKabupaten']);
+    Route::get('/location/provinsi', [App\Http\Controllers\API\LocationController::class, 'provinsi']);
+    Route::get('/location/kabupaten', [App\Http\Controllers\API\LocationController::class, 'kabupaten']);
+    Route::get('/location/kecamatan', [App\Http\Controllers\API\LocationController::class, 'kecamatan']);
 });
