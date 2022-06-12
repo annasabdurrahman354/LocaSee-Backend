@@ -21,7 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'phone_number',
+        'address',
         'avatar_url',
+        'provinsi_id',
+        'kabupaten_id',
+        'kecamatan_id',
         'password',
     ];
 
@@ -43,6 +47,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function provinsi()
+    {
+        return $this->belongsTo(Provinsi::class);
+    }
+
+    public function kabupaten()
+    {
+        return $this->belongsTo(Kabupaten::class);
+    }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class);
+    }
 
     public function posts()
     {

@@ -18,7 +18,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone_number');
+            $table->string('address');
             $table->string('avatar_url')->default("");
+            $table->unsignedBigInteger('provinsi_id')->nullable();
+            $table->foreign('provinsi_id')->references('id')->on('provinsis');
+            $table->unsignedBigInteger('kabupaten_id')->nullable();
+            $table->foreign('kabupaten_id')->references('id')->on('kabupatens');
+            $table->unsignedBigInteger('kecamatan_id')->nullable();
+            $table->foreign('kecamatan_id')->references('id')->on('kecamatans');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

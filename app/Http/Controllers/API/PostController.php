@@ -20,11 +20,11 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::where('id', $id)->with('user', 'provinsi', 'kabupaten', 'kecamatan')->get();
+        $post = Post::where('id', $id)->with('user', 'provinsi', 'kabupaten', 'kecamatan')->firstOrFail();
         if (is_null($post)) {
             return response()->json(['message' => 'Data not found'], 404); 
         }
-        return response()->json(['data' => $post[0], 'message' => 'Posdddts fetched.']);
+        return response()->json(['data' => $post, 'message' => 'Posdddts fetched.']);
     }
 
     public function store(Request $request)
@@ -162,7 +162,12 @@ class PostController extends Controller
     public function filter(Request $request)
     {
         $posts = Post::latest()->with('user', 'provinsi', 'kabupaten', 'kecamatan');
-      
+
+        if ($request->has('search')){
+            $posts->where('title', 'LIKE', "%{$request->search}%")
+                    ->orWhere('desc', 'LIKE', "%{$request->search}%");
+        }
+
         if ($request->has('price_min')) {
             $posts->where('price','>=', $request->price_min);
         }

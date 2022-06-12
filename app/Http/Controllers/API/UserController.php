@@ -14,13 +14,13 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::latest()->get();
+        $users = User::latest()->with('provinsi', 'kabupaten', 'kecamatan')->get();
         return response()->json(['data' => $users, 'message' => 'Users fetched.']);
     }
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::where('id', $id)->with('provinsi', 'kabupaten', 'kecamatan')->firstOrFail();
         if (is_null($user)) {
             return response()->json('Data not found', 404); 
         }
@@ -38,6 +38,10 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'phone_number' => 'required|string|max:13',
+            'address' => 'required|string',
+            'provinsi_id' => 'numeric',
+            'kabupaten_id' => 'numeric',
+            'kecamatan_id' => 'numeric',
             'image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
@@ -48,6 +52,11 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
+        $user->address = $request->address;
+        $user->provinsi_id = $request->provinsi_id;
+        $user->kabupaten_id = $request->kabupaten_id;
+        $user->kecamatan_id = $request->kecamatan_id;
+        
 
         if ($request->hasfile('image')) {
             File::deleteDirectory(public_path('/storage/user/'.$user->id));
