@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->string('address');
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
+            $table->string('rating_restaurant')->nullable();
             $table->json('images');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

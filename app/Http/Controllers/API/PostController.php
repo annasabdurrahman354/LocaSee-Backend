@@ -37,6 +37,7 @@ class PostController extends Controller
             'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+            'rating_restaurant' => 'string',
             'user_id' => 'required|numeric',
             'provinsi_id' => 'required|numeric',
             'kabupaten_id' => 'required|numeric',
@@ -59,6 +60,7 @@ class PostController extends Controller
             'address' => $request->address,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
+            'rating_restaurant' => $request->rating_restaurant,
             'user_id' => $request->user_id,
             'provinsi_id' => $request->provinsi_id,
             'kabupaten_id' => $request->kabupaten_id,
@@ -97,6 +99,7 @@ class PostController extends Controller
             'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+            'rating_restaurant' => 'string',
             'user_id' => 'required|numeric',
             'provinsi_id' => 'required|numeric',
             'kabupaten_id' => 'required|numeric',
@@ -129,6 +132,7 @@ class PostController extends Controller
         $post->address = $request->address;
         $post->latitude = $request->latitude;
         $post->longitude = $request->longitude;
+        $post->rating_restaurant = $request->rating_restaurant;
         $post->user_id = $request->user_id;
         $post->provinsi_id = $request->provinsi_id;
         $post->kabupaten_id = $request->kabupaten_id;

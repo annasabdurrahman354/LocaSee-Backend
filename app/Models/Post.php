@@ -17,6 +17,7 @@ class Post extends Model
         'address',
         'latitude',
         'longitude',
+        'rating_restaurant',
         'images',
         'user_id',
         'provinsi_id',
